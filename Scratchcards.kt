@@ -7,7 +7,7 @@ data class Rations(
 	val cardId: Int,
 	val winningNumbers: Set<Int>,
 	val holdingNumbers: Set<Int>
-	)
+)
 
 fun prepareForVoyage(line: String): Rations {
 	val numberRegex = """(\d+)""".toRegex()
@@ -18,7 +18,6 @@ fun prepareForVoyage(line: String): Rations {
 	val cardId = cardSection.run(numberRegex::find)!!.value.toInt()
 	val winningNumbers = winningNumbersSection.run(numberRegex::findAll).flatMap(MatchResult::groupValues).map(String::toInt).toSet()
 	val holdingNumbers = holdingNumbersSection.run(numberRegex::findAll).flatMap(MatchResult::groupValues).map(String::toInt).toSet()
-
 
 	return Rations(cardId, winningNumbers, holdingNumbers)
 }
@@ -41,21 +40,14 @@ fun explore(lines: List<String>): String {
 
 fun venture(lines: List<String>): String {
 	var gains = 0
-	val cardInstances: Array<Int> = Array(lines.size) { 0 }
-
-
-	for (i in 0 until lines.size) {
-		cardInstances[i] = 1
-	}
-
+	val cardInstances: Array<Int> = Array(lines.size) { 1 }
 
 	lines.map(::prepareForVoyage).forEachIndexed { i,it ->
 		it.run {
 			//Daily code
 
-
 			val winCount = holdingNumbers.intersect(winningNumbers).size
-			
+
 			for (j in i+1 .. i+winCount) {
 				cardInstances[j] += cardInstances[i]
 			}
@@ -65,7 +57,6 @@ fun venture(lines: List<String>): String {
 
 		}
 	}
-
 
 	return gains.toString()
 }
