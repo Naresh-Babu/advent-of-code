@@ -120,7 +120,6 @@ def part_two(input_data):
 			continue
 		if cur == "R":
 			continue
-
 		for command in workflows[cur]:
 			t_high,t_low = list(high), list(low)
 			jump_to = evaluate_two(t_high, t_low, command)
